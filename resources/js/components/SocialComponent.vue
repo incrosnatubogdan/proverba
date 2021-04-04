@@ -34,12 +34,12 @@
 </template>
 
 <script>
-    import * as actions from '../store/types/actions'
-    import store from '../store/index'
-    import {
-        mapState,
-        mapGetters
-    } from 'vuex';
+    // import * as actions from '../store/types/actions'
+    // import store from '../store/index'
+    // import {
+    //     mapState,
+    //     mapGetters
+    // } from 'vuex';
     
     export default {
         props: {
