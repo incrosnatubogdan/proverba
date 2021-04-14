@@ -20,10 +20,10 @@ export default {
 
     [actions.TOGGLE_LIKE](context, value) {
         return new Promise((resolve, reject) => {
-            let method = value ? 'post' : 'delete';
+            let method = value.liked ? 'post' : 'delete';
             axios({
                 method: method,
-                url: '/quotes/' + this.id + '/like',
+                url: '/quotes/' + value.id + '/like',
             }).then((response) => {
                 context.commit(mutations.TOGGLE_LIKE)
                 resolve(response)

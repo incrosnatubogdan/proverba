@@ -34,12 +34,12 @@
 </template>
 
 <script>
-    // import * as actions from '../store/types/actions'
-    // import store from '../store/index'
-    // import {
-    //     mapState,
-    //     mapGetters
-    // } from 'vuex';
+    import * as actions from '../store/types/actions'
+    import store from '../store/index'
+    import {
+        mapState,
+        mapGetters
+    } from 'vuex';
     
     export default {
         props: {
@@ -52,10 +52,13 @@
         },
         methods: {
             toggleLike(value) {
-                this.liked = value;
-                // store.dispatch(actions.TOGGLE_LIKE, value).then(() => {
-                //     this.liked = null;
-                // });
+                // this.liked = value;
+                store.dispatch(actions.TOGGLE_LIKE, {
+                    liked: value,
+                    id: this.id
+                }).then(() => {
+                    this.liked = value;
+                });
             }
         },
         mounted() {

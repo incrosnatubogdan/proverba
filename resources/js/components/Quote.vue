@@ -11,6 +11,8 @@
 
 <script>
     import SocialComponent from './SocialComponent';
+    import store from '../store/index';
+    import * as actions from '../store/types/actions'
 
     export default {
         components: { SocialComponent },
@@ -23,7 +25,9 @@
             }
         },
         methods: {
-
+            showSocial() {
+                store.dispatch(actions.TOGGLE_AUTH_POPUP, true)
+            }
         },
         mounted() {
         }

@@ -8,12 +8,18 @@ trait Likable
 {
     public function scopeWithLikes(Builder $query)
     {
-        $query->leftJoinSub(
-            'select quote_id, sum(liked) likes, sum(!liked) dislikes from likes group by quote_id',
-            'likes',
-            'likes.quote_id',
-            'quotes.id'
-        );
+        // $query->leftJoinSub(
+        //     'select quote_id, user_id as users, sum(liked) likes, sum(!liked) dislikes from likes group by (quote_id, user_id)',
+        //     'likes',
+        //     'likes.quote_id',
+        //     'quotes.id',
+        // );
+        // dd();
+        // $query->leftJoin(
+        //     'select quote_id, user_id, sum(liked) AS likes, sum(!liked) AS dislikes from likes GROUP BY quote_id',
+        // );
+        $query->with('likes');
+        
     }
 
     public function isLikedBy(User $user)
@@ -49,6 +55,7 @@ trait Likable
 
     public function like($user = null, $liked = true)
     {
+        // dd($user->id);
         $user = $user->id ?? auth()->id();
 
         if($user == null) {

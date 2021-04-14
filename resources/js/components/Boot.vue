@@ -4,14 +4,17 @@
             <quote :quote="getQuotes[0]" />
             <Snackbar />
         </div>
-        <auth />
+        <div>
+            
+        </div>
+        <!-- <auth /> -->
     </v-app>
 </template>
 
 <script>
     import Quote from './Quote';
     import Social from './SocialComponent';
-    import Auth from './AuthComponent';
+    // import Auth from './AuthComponent';
     import * as actions from '../store/types/actions'
     import store from '../store/index'
     import {
@@ -21,13 +24,17 @@
     import Snackbar from './pages/Snackbar';
 
     export default {
-        components: { Quote, Snackbar, Auth, Social },
+        components: { Quote, Snackbar, Social },
+        props: {
+            is_auth: Boolean,
+        },
         computed: {
             ...mapState([
                 'initialized'
             ]),
             ...mapGetters([
                 'getQuotes',
+                'getAuthPopup'
             ]),
             numberOfQuotes() {
                 return this.getQuotes.length

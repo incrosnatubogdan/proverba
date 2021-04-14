@@ -5,7 +5,7 @@ import mutations from './mutations'
 const state = {
     snackbar: {
         showing: true,
-        authPopup: false,
+        authPopup: true,
         message: "Test",
         timeout: 3000,
         type: 'success',

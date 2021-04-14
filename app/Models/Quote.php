@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Quote extends Model
 {
     use HasFactory, Likable;
+    protected $table = 'quotes';
+
+    protected $primaryKey = 'id';
+
     protected $fillable = [
-        'post_title', 
+        'post_title',
         'description'
     ];
  

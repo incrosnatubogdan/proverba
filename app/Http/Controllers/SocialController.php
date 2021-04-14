@@ -17,6 +17,7 @@ class SocialController extends Controller
 
     public function Callback($provider)
     {
+        dd(Socialite::driver($provider)->setHttpClient(new \GuzzleHttp\Client(['verify' => false]))->stateless()->user());
         $userSocial =   Socialite::driver($provider)->stateless()->user();
         $users       =   User::where(['email' => $userSocial->getEmail()])->first();
         if($users){

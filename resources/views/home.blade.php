@@ -1,9 +1,7 @@
-@extends('layout.app')
- 
+@extends('layouts.app')
+
 @section('content')
-
 <div class="container">
-    <Boot />
+    <Boot :is_auth="{{ json_encode(auth()->check()) }}" />
 </div>
-
 @endsection

@@ -23,10 +23,8 @@ Route::get('/quotes/{id}', [QuoteController::class, 'get']);
  
 Route::post('/like', [QuoteController::class, 'fetchLike']);
 
-Route::post('/quotes/{tweet}/like', [QuoteLikesController::class, 'store']);
-Route::delete('/quotes/{tweet}/like', [QuoteLikesController::class, 'store']);
-
-Route::post('/like/{id}', [BlogLikesController::class, 'store']);
+Route::post('/quotes/{quote}/like', [QuoteLikesController::class, 'store']);
+Route::delete('/quotes/{quote}/like', [QuoteLikesController::class, 'store']);
  
 Route::post('/dislike', [QuoteController::class, 'fetchDislike']);
 Route::post('/dislike/{id}', [QuoteController::class, 'handleDislike']);
@@ -35,3 +33,6 @@ Route::get('/user', [UserController::class, 'get']);
 
 Route::get('/login/{provider}', [SocialController::class, 'redirect']);
 Route::get('/login/{provider}/callback', [SocialController::class, 'Callback']);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
