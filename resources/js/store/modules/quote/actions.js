@@ -33,6 +33,9 @@ export default {
         })
     },
 
-    
-
+    [actions.NEXT_QUOTE](context) {
+        return new Promise(() => {
+            context.commit(mutations.NEXT_QUOTE)
+        })
+    },
 }

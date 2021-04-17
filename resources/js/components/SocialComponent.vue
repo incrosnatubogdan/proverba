@@ -29,6 +29,15 @@
             >
               <v-icon>mdi-thumb-down</v-icon>
             </v-btn>
+
+            <v-btn
+                v-bind:class="{ 'swirl-out-bl-bck': liked == false }"
+                @click="next()"
+                icon
+                v-if="!liked"
+                color="indigo"
+            >   Next
+            </v-btn>
         </v-col>
     </v-row>
 </template>
@@ -59,6 +68,9 @@
                 }).then(() => {
                     this.liked = value;
                 });
+            },
+            next() {
+                store.dispatch(actions.NEXT_QUOTE);
             }
         },
         mounted() {

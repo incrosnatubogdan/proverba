@@ -10,32 +10,16 @@ trait Likable
 {
     public function scopeWithLikes(Builder $query, $id)
     {
-        $alreadyLiked = $this->likedbyUser(auth()->id());
-
-        // dd(Tag::findFromString('second tag'));
-
         $query->where('id', '>', $id)
-
-        // Used for tagging
-        // ->withAnyTags(['second tag'])
-        
-        ->whereNotIn('id', $alreadyLiked)
+        ->whereNotIn('id', $this->likedbyUser(auth()->id()))
         ->take(50)
         ->with('tagsTranslated')
-        // ->with(array('tagsTranslated' => function($query) {
-        //     $query->select('id','name');
-        // }))
         ->withCount([
             'likes AS total_likes' => function ($query) {
                 $query->select(DB::raw("SUM(liked) as totallikes"));
             },
         ]);
     }
-
-    // public function tags()
-    // {
-    //     return $this->hasMany(Tag::class);
-    // }
 
     public function likes()
     {
@@ -66,6 +50,8 @@ trait Likable
     {
         $user = $user->id ?? auth()->id();
         $likeNo = $liked ? 1 : -1;
+
+        // dd($user);
 
         if($user == null) {
             return response()->json('User is not logged in', 200);
