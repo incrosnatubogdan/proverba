@@ -11,16 +11,18 @@ class QuoteLikesController extends Controller
     public function store(Request $request, $id)
     {
         $quote = Quote::findOrFail($id);
-        // dd($quote); 
-        $quote = $quote->like(current_user());
+        // dd(current_user()); 
+        $quote = $quote->like(current_user(), true);
 
         return $quote;
     }
 
-    public function destroy(Quote $quote)
+    public function destroy(Request $request, $id)
     {
-        $quote->dislike(current_user());
+        $quote = Quote::findOrFail($id);
+        // dd($quote); 
+        $quote = $quote->dislike(current_user());
 
-        return back();
+        return $quote;
     }
 }

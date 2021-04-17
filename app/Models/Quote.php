@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Tags\HasTags;
 
 class Quote extends Model
 {
-    use HasFactory, Likable;
+    use HasFactory, Likable, HasTags;
     protected $table = 'quotes';
 
     protected $primaryKey = 'id';

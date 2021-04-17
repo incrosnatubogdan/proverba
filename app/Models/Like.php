@@ -9,6 +9,8 @@ class Like extends Model
     protected $table = 'likes';
 
     protected $fillable = [
-        'liked'
+        'liked',
+        'user_id',
+        'quote_id'
     ];
 }

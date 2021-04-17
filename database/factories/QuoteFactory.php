@@ -25,7 +25,8 @@ class QuoteFactory extends Factory
         return [
             'post_title' => $this->faker->name(),
             'description' => $this->faker->text($maxNbChars = 100),
-            'post_slug' => $this->faker->name()
+            'post_slug' => $this->faker->name(),
+            'tags' => ['first tag', 'second tag'],
         ];
     }
 }

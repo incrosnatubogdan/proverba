@@ -18,10 +18,16 @@ class QuoteController extends Controller
 
     public function get(User $user, $id)
     {
+        $user = auth()->user() == null ? $user : auth()->user();
         $quotes = $user->timeline((int)$id);
+
+        // dd(auth()->user()->name);
+        // dd($quotes);
+
         if(count($quotes) < 20) {
             return $user->timeline(0);
         }
+
         return $quotes;
     }
  

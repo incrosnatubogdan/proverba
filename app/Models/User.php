@@ -41,9 +41,9 @@ class User extends Authenticatable
 
     public function timeline($afterId = 0)
     {
-        return Quote::withLikes()
-            ->where('id', '>', $afterId)
-            ->take(20)
+        return Quote::withLikes($afterId)
+            // ->where('id', '>', $afterId)
+            // ->take(20)
             ->get();
     }
 

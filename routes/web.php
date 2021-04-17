@@ -24,7 +24,7 @@ Route::get('/quotes/{id}', [QuoteController::class, 'get']);
 Route::post('/like', [QuoteController::class, 'fetchLike']);
 
 Route::post('/quotes/{quote}/like', [QuoteLikesController::class, 'store']);
-Route::delete('/quotes/{quote}/like', [QuoteLikesController::class, 'store']);
+Route::delete('/quotes/{quote}/like', [QuoteLikesController::class, 'destroy']);
  
 Route::post('/dislike', [QuoteController::class, 'fetchDislike']);
 Route::post('/dislike/{id}', [QuoteController::class, 'handleDislike']);
