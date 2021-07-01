@@ -21,6 +21,7 @@ export default {
 
     [types.NEXT_QUOTE](state) {
         state.quotes.splice(0, 1);
+        localStorage.setItem('last_id', state.quotes[0].id)
     },
 
     
