@@ -20,6 +20,8 @@ use App\Http\Controllers\SocialController;
 Route::get('/', [QuoteController::class, 'index']);
 
 Route::get('/quotes/{id}', [QuoteController::class, 'get']);
+
+Route::get('/quotes/tag/{category}', [QuoteController::class, 'category']);
  
 Route::post('/like', [QuoteController::class, 'fetchLike']);
 

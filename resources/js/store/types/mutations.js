@@ -7,6 +7,8 @@ export const TOGGLE_AUTH_POPUP = 'TOGGLE_AUTH_POPUP'
 export const LOGGED_USER = 'LOGGED_USER'
 export const LOG_OUT_USER = 'LOG_OUT_USER'
 
+export const GET_TAG = 'GET_TAG'
 export const GET_QUOTES = 'GET_QUOTES'
+
 export const TOGGLE_LIKE = 'TOGGLE_LIKE'
 export const NEXT_QUOTE = 'NEXT_QUOTE'

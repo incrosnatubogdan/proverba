@@ -9,6 +9,7 @@
         <v-card-text>
             {{ quote.description }}
         </v-card-text>
+        <v-btn @click="getByCategory('first tag')">Category</v-btn>
         <v-card-actions v-if="isLoggedIn">
             <tags-component :tags="quote.tags_translated"> </tags-component>
             <social-component :id="quote.id"> </social-component>
@@ -49,7 +50,10 @@
         methods: {
             showSocial() {
                 store.dispatch(actions.TOGGLE_AUTH_POPUP, true)
-            }
+            },
+            getByCategory(category) {
+                store.dispatch(actions.GET_TAG, category)
+            },
         },
         mounted() {
         }

@@ -1960,6 +1960,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -1984,6 +1985,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     showSocial: function showSocial() {
       _store_index__WEBPACK_IMPORTED_MODULE_3__.default.dispatch(_store_types_actions__WEBPACK_IMPORTED_MODULE_4__.TOGGLE_AUTH_POPUP, true);
+    },
+    getByCategory: function getByCategory(category) {
+      _store_index__WEBPACK_IMPORTED_MODULE_3__.default.dispatch(_store_types_actions__WEBPACK_IMPORTED_MODULE_4__.GET_TAG, category);
     }
   },
   mounted: function mounted() {}
@@ -2456,6 +2460,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       reject(error);
     });
   });
+}), _defineProperty(_actions$GET_QUOTES$a, _types_actions__WEBPACK_IMPORTED_MODULE_1__.GET_TAG, function (context, category) {
+  return new Promise(function (resolve, reject) {
+    axios({
+      method: 'get',
+      url: '/quotes/tag/' + category
+    }).then(function (response) {
+      context.commit(_types_mutations__WEBPACK_IMPORTED_MODULE_0__.GET_QUOTES, response.data); // this.quotes = response.data.data;
+
+      resolve(response);
+    })["catch"](function (error) {
+      reject(error);
+    });
+  });
 }), _defineProperty(_actions$GET_QUOTES$a, _types_actions__WEBPACK_IMPORTED_MODULE_1__.TOGGLE_LIKE, function (context, value) {
   return new Promise(function (resolve, reject) {
     var method = value.liked ? 'post' : 'delete';
@@ -2815,6 +2832,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "LOGGED_USER": () => (/* binding */ LOGGED_USER),
 /* harmony export */   "LOG_OUT_USER": () => (/* binding */ LOG_OUT_USER),
 /* harmony export */   "GET_QUOTES": () => (/* binding */ GET_QUOTES),
+/* harmony export */   "GET_TAG": () => (/* binding */ GET_TAG),
 /* harmony export */   "TOGGLE_LIKE": () => (/* binding */ TOGGLE_LIKE),
 /* harmony export */   "NEXT_QUOTE": () => (/* binding */ NEXT_QUOTE)
 /* harmony export */ });
@@ -2825,6 +2843,7 @@ var TOGGLE_AUTH_POPUP = 'TOGGLE_AUTH_POPUP';
 var LOGGED_USER = 'LOGGED_USER';
 var LOG_OUT_USER = 'LOG_OUT_USER';
 var GET_QUOTES = 'GET_QUOTES';
+var GET_TAG = 'GET_TAG';
 var TOGGLE_LIKE = 'TOGGLE_LIKE';
 var NEXT_QUOTE = 'NEXT_QUOTE';
 
@@ -2844,6 +2863,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "TOGGLE_AUTH_POPUP": () => (/* binding */ TOGGLE_AUTH_POPUP),
 /* harmony export */   "LOGGED_USER": () => (/* binding */ LOGGED_USER),
 /* harmony export */   "LOG_OUT_USER": () => (/* binding */ LOG_OUT_USER),
+/* harmony export */   "GET_TAG": () => (/* binding */ GET_TAG),
 /* harmony export */   "GET_QUOTES": () => (/* binding */ GET_QUOTES),
 /* harmony export */   "TOGGLE_LIKE": () => (/* binding */ TOGGLE_LIKE),
 /* harmony export */   "NEXT_QUOTE": () => (/* binding */ NEXT_QUOTE)
@@ -2854,6 +2874,7 @@ var PUSH_NOTIFICATION = 'PUSH_NOTIFICATION';
 var TOGGLE_AUTH_POPUP = 'TOGGLE_AUTH_POPUP';
 var LOGGED_USER = 'LOGGED_USER';
 var LOG_OUT_USER = 'LOG_OUT_USER';
+var GET_TAG = 'GET_TAG';
 var GET_QUOTES = 'GET_QUOTES';
 var TOGGLE_LIKE = 'TOGGLE_LIKE';
 var NEXT_QUOTE = 'NEXT_QUOTE';
@@ -39374,6 +39395,18 @@ var render = function() {
       _c("v-card-text", [
         _vm._v("\n        " + _vm._s(_vm.quote.description) + "\n    ")
       ]),
+      _vm._v(" "),
+      _c(
+        "v-btn",
+        {
+          on: {
+            click: function($event) {
+              return _vm.getByCategory("first tag")
+            }
+          }
+        },
+        [_vm._v("Category")]
+      ),
       _vm._v(" "),
       _vm.isLoggedIn
         ? _c(

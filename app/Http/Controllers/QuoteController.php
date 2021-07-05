@@ -21,12 +21,17 @@ class QuoteController extends Controller
         $user = auth()->user() == null ? $user : auth()->user();
         $quotes = $user->timeline((int)$id);
 
-        // dd(auth()->user()->name);
-        // dd($quotes);
-
         if(count($quotes) < 20) {
             return $user->timeline(0);
         }
+
+        return $quotes;
+    }
+
+    public function category(User $user, $category)
+    {
+        $user = auth()->user() == null ? $user : auth()->user();
+        $quotes = $user->getCategory($category);
 
         return $quotes;
     }
