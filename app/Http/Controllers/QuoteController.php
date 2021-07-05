@@ -28,10 +28,10 @@ class QuoteController extends Controller
         return $quotes;
     }
 
-    public function category(User $user, $category)
+    public function category(User $user, $category, $id)
     {
         $user = auth()->user() == null ? $user : auth()->user();
-        $quotes = $user->getCategory($category);
+        $quotes = $user->getCategory($category, (int)$id );
 
         return $quotes;
     }

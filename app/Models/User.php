@@ -52,9 +52,10 @@ class User extends Authenticatable
         ->get();
     }
 
-    public function getCategory($tag)
+    public function getCategory($tag, $id)
     {
         return Quote::withAnyTags([$tag])
+        ->where('id', '>', $id)
         ->with('tagsTranslated')
         ->take(50)
         ->withCount([

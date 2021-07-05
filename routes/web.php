@@ -21,7 +21,7 @@ Route::get('/', [QuoteController::class, 'index']);
 
 Route::get('/quotes/{id}', [QuoteController::class, 'get']);
 
-Route::get('/quotes/tag/{category}', [QuoteController::class, 'category']);
+Route::get('/quotes/tag/{category}/{id}', [QuoteController::class, 'category']);
  
 Route::post('/like', [QuoteController::class, 'fetchLike']);
 

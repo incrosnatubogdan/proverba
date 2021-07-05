@@ -1933,6 +1933,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/index */ "./resources/js/store/index.js");
 /* harmony import */ var _store_types_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/types/actions */ "./resources/js/store/types/actions.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+var _data$components$comp;
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -1961,13 +1963,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_data$components$comp = {
+  data: function data() {
+    return {
+      selectedItem: null
+    };
+  },
   components: {
     SocialComponent: _SocialComponent__WEBPACK_IMPORTED_MODULE_0__.default,
     TagsComponent: _TagsComponent__WEBPACK_IMPORTED_MODULE_2__.default,
@@ -1976,22 +1995,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)(['isLoggedIn'])),
   props: {
     quote: Object
+  }
+}, _defineProperty(_data$components$comp, "data", function data() {
+  return {
+    alllikes: ''
+  };
+}), _defineProperty(_data$components$comp, "methods", {
+  showSocial: function showSocial() {
+    _store_index__WEBPACK_IMPORTED_MODULE_3__.default.dispatch(_store_types_actions__WEBPACK_IMPORTED_MODULE_4__.TOGGLE_AUTH_POPUP, true);
   },
-  data: function data() {
-    return {
-      alllikes: ''
-    };
-  },
-  methods: {
-    showSocial: function showSocial() {
-      _store_index__WEBPACK_IMPORTED_MODULE_3__.default.dispatch(_store_types_actions__WEBPACK_IMPORTED_MODULE_4__.TOGGLE_AUTH_POPUP, true);
-    },
-    getByCategory: function getByCategory(category) {
-      _store_index__WEBPACK_IMPORTED_MODULE_3__.default.dispatch(_store_types_actions__WEBPACK_IMPORTED_MODULE_4__.GET_TAG, category);
-    }
-  },
-  mounted: function mounted() {}
-});
+  getByCategory: function getByCategory(category) {
+    var _this = this;
+
+    _store_index__WEBPACK_IMPORTED_MODULE_3__.default.dispatch(_store_types_actions__WEBPACK_IMPORTED_MODULE_4__.GET_TAG, category).then(function () {
+      _this.selectedItem = null;
+    });
+  }
+}), _defineProperty(_data$components$comp, "mounted", function mounted() {}), _data$components$comp);
 
 /***/ }),
 
@@ -2464,7 +2484,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   return new Promise(function (resolve, reject) {
     axios({
       method: 'get',
-      url: '/quotes/tag/' + category
+      url: '/quotes/tag/' + category + '/' + 0
     }).then(function (response) {
       context.commit(_types_mutations__WEBPACK_IMPORTED_MODULE_0__.GET_QUOTES, response.data); // this.quotes = response.data.data;
 
@@ -39395,6 +39415,51 @@ var render = function() {
       _c("v-card-text", [
         _vm._v("\n        " + _vm._s(_vm.quote.description) + "\n    ")
       ]),
+      _vm._v(" "),
+      _c(
+        "v-list",
+        { attrs: { flat: "" } },
+        [
+          _c(
+            "v-list-item-group",
+            {
+              attrs: { color: "primary" },
+              model: {
+                value: _vm.selectedItem,
+                callback: function($$v) {
+                  _vm.selectedItem = $$v
+                },
+                expression: "selectedItem"
+              }
+            },
+            _vm._l(_vm.quote.tags_translated, function(item, i) {
+              return _c(
+                "v-list-item",
+                { key: i },
+                [
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-title", {
+                        domProps: { textContent: _vm._s(item.name.en) },
+                        on: {
+                          click: function($event) {
+                            return _vm.getByCategory(item.name.en)
+                          }
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            }),
+            1
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "v-btn",

@@ -22,7 +22,7 @@ export default {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
-                url: '/quotes/tag/' + category,
+                url: '/quotes/tag/' + category + '/' + 0,
             }).then((response) => {
                 context.commit(mutations.GET_QUOTES, response.data)
                 // this.quotes = response.data.data;
