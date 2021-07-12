@@ -11,7 +11,7 @@
         </v-card-text>
 
         <v-list flat>
-            <v-list-item-group v-model="selectedItem" color="primary">
+            <v-list-item-group color="primary">
                 <v-list-item v-for="(item, i) in quote.tags_translated" :key="i">
                     <v-list-item-content>
                         <v-list-item-title v-text="item.name.en" @click="getByCategory(item.name.en)">
@@ -21,7 +21,7 @@
             </v-list-item-group>
         </v-list>
 
-        <v-btn @click="getByCategory('first tag')">Category</v-btn>
+        <!-- <v-btn @click="getByCategory('first tag')">Category</v-btn> -->
         <v-card-actions v-if="isLoggedIn">
             <tags-component :tags="quote.tags_translated"> </tags-component>
             <social-component :id="quote.id"> </social-component>

@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <div v-if=" numberOfQuotes > 0">
-            <quote :quote="getQuotes[0]" />
+            <quote :quote="currentQuote" />
             <Snackbar />
         </div>
         <div>
@@ -38,6 +38,9 @@
             ]),
             numberOfQuotes() {
                 return this.getQuotes.length
+            },
+            currentQuote() {
+                return this.getQuotes[0]
             }
         },
         props: {

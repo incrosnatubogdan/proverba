@@ -13,3 +13,9 @@ export const GET_TAG = 'GET_TAG'
 
 export const TOGGLE_LIKE = 'TOGGLE_LIKE'
 export const NEXT_QUOTE = 'NEXT_QUOTE'
+
+export const ADMIN_QUOTES = 'ADMIN_QUOTES'
+export const SET_ADMIN_QUOTES = 'SET_ADMIN_QUOTES'
+export const EDIT_ADMIN_QUOTES = 'EDIT_ADMIN_QUOTES'
+export const RESET_ADMIN_QUOTES = 'RESET_ADMIN_QUOTES'
+export const UPDATE_QUOTE = 'UPDATE_QUOTE'

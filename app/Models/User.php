@@ -52,6 +52,13 @@ class User extends Authenticatable
         ->get();
     }
 
+    public function paginatedTimeline($afterId = 0, $paginate = 10)
+    {
+        return Quote::withLikes($afterId)
+        ->withAnyTags(Tag::pluck('name')->toArray())
+        ->paginate($paginate);
+    }
+
     public function getCategory($tag, $id)
     {
         return Quote::withAnyTags([$tag])

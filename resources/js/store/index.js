@@ -3,6 +3,8 @@ import Vue from 'vue';
 import ui from './modules/ui'
 import user from './modules/user'
 import quote from './modules/quote'
+import admin from './modules/admin'
+
 
 
 
@@ -40,7 +42,8 @@ export default new Vuex.Store({
     modules: {
         ui,
         user,
-        quote
+        quote,
+        admin
     },
     strict: true
 });
