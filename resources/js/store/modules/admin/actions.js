@@ -45,6 +45,24 @@ export default {
             });
         })
     },
+
+    [actions.TOGGLE_DELETE_POPUP](context, data) {
+        return new Promise((resolve) => {
+            context.commit(mutations.TOGGLE_DELETE_POPUP, data)
+            resolve()
+        })
+    },
+
+    [actions.DELETE_QUOTE](context, payload) {
+        return new Promise((resolve, reject) => {
+            axios.delete(`/admin/delete`, payload).then((response) => {
+                context.commit(mutations.DELETE_QUOTE, payload)
+                resolve(response)
+            }).catch((error) => {
+                reject(error)
+            });
+        })
+    },
     
 
 }

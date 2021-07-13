@@ -4,6 +4,10 @@ import mutations from './mutations'
 
 const state = {
     editDialog: false,
+    deleteDialog:false,
+    quoteToDelete: {
+
+    },
     adminQuotes: null,
     numberOfquotes: 0,
     numberOfPages: 0,

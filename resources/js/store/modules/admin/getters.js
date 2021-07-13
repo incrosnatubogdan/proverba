@@ -4,5 +4,8 @@ export default {
     adminTableNumberOfPages: state => state.numberOfPages,
     adminTableNumberOfQuotes: state => state.numberOfquotes,
     sentQuote: state => state.sentQuote,
-    adminEditDialog: state => state.editDialog
+    adminEditDialog: state => state.editDialog,
+    emptyQuote: state => state.emptyQuote,
+    quoteToDelete: state => state.quoteToDelete,
+    adminDeleteDialog: state => state.deleteDialog,
 }

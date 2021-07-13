@@ -21,13 +21,26 @@ export default {
         state.sentQuote.id = quote.id;
         state.sentQuote.post_title = quote.post_title;
         state.sentQuote.description = quote.description;
-        state.sentQuote.tags = quote.tags_translated.map(x => x.name.en );
+
+        if(quote.tags_translated) {
+            state.sentQuote.tags = quote.tags_translated.map(x => x.name.en );
+        }
+        
         state.editDialog = true;
     },  
 
     [types.RESET_ADMIN_QUOTES](state, data) {
         state.sentQuote = JSON.parse(JSON.stringify(state.emptyQuote))
-        state.editDialog = true;
+        state.editDialog = false;
+    },
+
+    [types.TOGGLE_DELETE_POPUP](state, data) {
+        state.deleteDialog = data.popup;
+        if(data.popup) {
+            state.quoteToDelete = data.quote
+        } else {
+            state.quoteToDelete = {}
+        }
     },
 
     [types.UPDATE_QUOTE](state, quote) {

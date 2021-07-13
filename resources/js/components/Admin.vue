@@ -1,5 +1,6 @@
 <template>
    <v-app>
+       <v-btn x-large color="success" @click="editQuote(emptyQuote)"> New quote </v-btn>
         <v-data-table
         v-if="adminQuotes"
         :footer-props="{
@@ -41,6 +42,7 @@
         </template>
     </v-data-table>
     <quote-modal />
+    <quote-delete-modal />
    </v-app>
 </template>
 
@@ -53,6 +55,7 @@
         mapGetters
     } from 'vuex';
     import QuoteModal from './QuoteModal.vue';
+import QuoteDeleteModal from './QuoteDeleteModal.vue';
 
     export default {
         data() {
@@ -88,14 +91,15 @@
                 ],
             }
         },
-        components: {QuoteModal},
+        components: {QuoteModal, QuoteDeleteModal},
         computed: {
             ...mapGetters([
                 'isLoggedIn',
                 'adminQuotes',
                 'getAdminSearchFilters',
                 'adminTableNumberOfQuotes',
-                'adminTableNumberOfPages'
+                'adminTableNumberOfPages',
+                'emptyQuote'
             ]),
 
             options: {
@@ -111,13 +115,14 @@
         },
         methods: {
             deleteQuote(quote) {
-
+                store.dispatch(actions.TOGGLE_DELETE_POPUP, {
+                    popup: true,
+                    quote: quote
+                })
             },
 
             editQuote(quote) {
-            store.dispatch(actions.EDIT_ADMIN_QUOTES, quote)
-
-                
+                store.dispatch(actions.EDIT_ADMIN_QUOTES, quote)
             }
         },
         mounted() {
