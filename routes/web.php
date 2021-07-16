@@ -36,7 +36,7 @@ Route::post('/dislike/{id}', [QuoteController::class, 'handleDislike']);
 Route::get('/user', [UserController::class, 'get']);
 
 Route::get('/admin', [AdminController::class, 'index']);
-Route::get('/admin/quotes/{id}', [AdminController::class, 'get']);
+Route::post('/admin/quotes', [AdminController::class, 'get']);
 Route::put('/admin/update', [AdminController::class, 'update']);
 
 

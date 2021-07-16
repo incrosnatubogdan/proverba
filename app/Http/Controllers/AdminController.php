@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Quote;
 
+use App\Repositories\AdminRepository;
+
 
 class AdminController extends Controller
 {
@@ -17,30 +19,33 @@ class AdminController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        // $this->middleware('auth');
-    }
+   /**
+     * @var \App\Repositories\AdminRepository
+     */
+    private $adminRepository;
+
 
     /**
-     * Show the application dashboard.
+     * UserController constructor.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @param \App\Repositories\AdminRepository $adminRepository
      */
+    public function __construct(AdminRepository $adminRepository)
+    {
+        $this->adminRepository = $adminRepository;
+    }
+
     public function index()
     {
         return view('admin');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function get($id = 0)
+    public function get(Request $request)
     {
-        $user = new User;
-        return $user->paginatedTimeline($id, 20);
+        // $user = new User;
+        // return $user->paginatedTimeline($id, 20);
+        // return AdminRepository
+        return response()->json($this->adminRepository->search($request)->paginate(isset($request->rowsPerPage) ? $request->rowsPerPage : 20));
     }
 
     /**

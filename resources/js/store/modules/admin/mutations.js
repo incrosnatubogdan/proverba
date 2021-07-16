@@ -12,9 +12,13 @@ export default {
 
         console.log(state.adminQuotes)
     },
-    
-    [types.SET_ADMIN_QUOTES](state, data) {
-        state.adminQuotes = data;
+
+    [types.SET_CSV_DATA](state, data) {
+        state.CSVData = data;
+    },
+
+    [types.SET_ADMIN_FILTERS](state, filters) {
+        state.filters = filters;
     },
 
     [types.EDIT_ADMIN_QUOTES](state, quote) {

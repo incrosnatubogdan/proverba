@@ -1,6 +1,7 @@
 <template>
    <v-app>
        <v-btn x-large color="success" @click="editQuote(emptyQuote)"> New quote </v-btn>
+       <csv-card />
         <v-data-table
         v-if="adminQuotes"
         :footer-props="{
@@ -8,15 +9,17 @@
             showFirstLastPage: true,
             showCurrentPage:true,
             disablePagination: false,
-            'items-per-page-options': [10,15, 20, 30, 40, 50,100],
+            'items-per-page-options': [10,20, 50],
             firstIcon: 'mdi-arrow-collapse-left',
             lastIcon: 'mdi-arrow-collapse-right',
             prevIcon: 'mdi-minus',
             nextIcon: 'mdi-plus',
         }" 
       :page-count="adminTableNumberOfPages"
-      :items-per-page="options.itemsPerPage" 
+      :items-per-page="options.itemsPerPage"
+      :options.sync="options"
       :headers="tableHeaders" 
+      :server-items-length="adminTableNumberOfQuotes"
       :items.sync="localCopy">
 
         <template #item.tags_translated="{ item }">
@@ -55,7 +58,8 @@
         mapGetters
     } from 'vuex';
     import QuoteModal from './QuoteModal.vue';
-import QuoteDeleteModal from './QuoteDeleteModal.vue';
+    import QuoteDeleteModal from './QuoteDeleteModal.vue';
+    import CSVCard from './pages/CSVCard.vue';
 
     export default {
         data() {
@@ -91,7 +95,7 @@ import QuoteDeleteModal from './QuoteDeleteModal.vue';
                 ],
             }
         },
-        components: {QuoteModal, QuoteDeleteModal},
+        components: {QuoteModal, QuoteDeleteModal, CSVCard},
         computed: {
             ...mapGetters([
                 'isLoggedIn',
@@ -99,14 +103,19 @@ import QuoteDeleteModal from './QuoteDeleteModal.vue';
                 'getAdminSearchFilters',
                 'adminTableNumberOfQuotes',
                 'adminTableNumberOfPages',
-                'emptyQuote'
+                'emptyQuote',
+                'lastQuoteId'
             ]),
 
             options: {
                 get() {
                     return this.getAdminSearchFilters
                 },
-                set(value) {},
+                set(value) {
+                    store.dispatch(actions.SET_ADMIN_FILTERS, value)
+                    store.dispatch(actions.ADMIN_QUOTES, this.lastQuoteId)
+
+                },
             },
 
              localCopy() {
@@ -119,6 +128,53 @@ import QuoteDeleteModal from './QuoteDeleteModal.vue';
                     popup: true,
                     quote: quote
                 })
+            },
+
+            onChange(e) {
+                var files = e.target.files,
+                    f = files[0];
+                var reader = new FileReader();
+                let readData;
+                reader.onload = function (e) {
+                    var data = new Uint8Array(e.target.result);
+                    var workbook = XLSX.read(data, {
+                        type: 'array'
+                    });
+                    let sheetName = workbook.SheetNames[0]
+                    /* DO SOMETHING WITH workbook HERE */
+                    let worksheet = workbook.Sheets[sheetName];
+
+                    readData = XLSX.utils.sheet_to_json(worksheet)
+                    let userNamesTocheck = [];
+                    if (readData.length > 0) {
+                        try {
+                            readData = readData.map((item, index) => {
+                                const username = item['First Name'].toLowerCase() + '.' + item['Last Name']
+                                    .toLowerCase();
+                                userNamesTocheck.push(username)
+                                return {
+                                    lname: item['Last Name'],
+                                    fname: item['First Name'],
+                                    username: username,
+                                    email: item['E-mail'],
+                                    location: item['Location'],
+                                    index: index
+                                };
+                            });
+
+                            store.dispatch(actions.SET_CSV_DATA, readData)
+                        } catch (e) {
+                            store.dispatch(actions.PUSH_NOTIFICATION, {
+                                type: 'warning',
+                                message: 'An error has occured while adding the excel data, please make sure that the data is valid.'
+                            }, {
+                                root: true
+                            });
+                            store.dispatch(actions.SET_CSV_DATA, [])
+                        }
+                    }
+                };
+                reader.readAsArrayBuffer(f);
             },
 
             editQuote(quote) {

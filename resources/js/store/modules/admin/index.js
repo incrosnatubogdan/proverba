@@ -12,9 +12,10 @@ const state = {
     numberOfquotes: 0,
     numberOfPages: 0,
     filters: {
-        page:0,
+        page: 0,
         itemsPerPage: 15
     },
+    CSVData: [],
     sentQuote: {
 
     },
