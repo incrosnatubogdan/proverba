@@ -18,6 +18,21 @@ export default {
         })
     },
 
+    [actions.GET_TAG](context, category) {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'get',
+                url: '/quotes/tag/' + category + '/' + 0,
+            }).then((response) => {
+                context.commit(mutations.GET_QUOTES, response.data)
+                // this.quotes = response.data.data;
+                resolve(response)
+            }).catch((error) => {
+                reject(error)
+            });
+        })
+    },
+
     [actions.TOGGLE_LIKE](context, value) {
         return new Promise((resolve, reject) => {
             let method = value.liked ? 'post' : 'delete';

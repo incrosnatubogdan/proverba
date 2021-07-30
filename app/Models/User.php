@@ -6,6 +6,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Tags\HasTags;
+use Spatie\Tags\Tag;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class User extends Authenticatable
 {
@@ -42,10 +48,31 @@ class User extends Authenticatable
     public function timeline($afterId = 0)
     {
         return Quote::withLikes($afterId)
-            // ->where('id', '>', $afterId)
-            // ->take(20)
-            ->get();
+        ->withAnyTags(Tag::pluck('name')->toArray())
+        ->get();
     }
+
+    public function paginatedTimeline($afterId = 0, $paginate = 10)
+    {
+        return Quote::withLikes($afterId)
+        ->withAnyTags(Tag::pluck('name')->toArray())
+        ->paginate($paginate);
+    }
+
+    public function getCategory($tag, $id)
+    {
+        return Quote::withAnyTags([$tag])
+        ->where('id', '>', $id)
+        ->with('tagsTranslated')
+        ->take(50)
+        ->withCount([
+            'likes AS total_likes' => function ($query) {
+                $query->select(DB::raw("SUM(liked) as totallikes"));
+            },
+        ])->get();
+    }
+
+    
 
     public function quotes()
     {

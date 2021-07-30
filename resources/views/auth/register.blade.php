@@ -68,6 +68,16 @@
                                 </button>
                             </div>
                         </div>
+
+                        <div class="form-group row mb-0">
+                                <p>
+                                Already have an account?  
+                                    <a href="{{ route('login') }}">
+                                        Click here
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

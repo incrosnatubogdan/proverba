@@ -10,6 +10,10 @@ Vue.component('social-component', require('./components/SocialComponent.vue').de
 
 Vue.component('quote', require('./components/Quote.vue').default);
 Vue.component('boot', require('./components/Boot.vue').default);
+Vue.component('admin', require('./components/Admin.vue').default);
+Vue.component('csv-card', require('./components/pages/CSVCard.vue').default);
+
+
 // Vue.component('auth', require('./components/AuthComponent.vue').default);
 
 
