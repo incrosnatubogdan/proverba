@@ -5,10 +5,11 @@
             sm="12"
           >
           <v-chip
-            v-for="(tag) in tags"
+            v-for="(tag, index) in tags"
             :key="tag.name_translated"
             color="green"
             outlined
+            :class="{ 'ml-2' : index > 0 }"
             pill
             >
             {{ tag.name_translated }}

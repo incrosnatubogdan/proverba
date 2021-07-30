@@ -10,8 +10,13 @@
             {{ quote.description }}
         </v-card-text>
         <v-card-actions>
-            <tags-component :tags="quote.tags_translated"> </tags-component>
-            <social-component :id="quote.id"> </social-component>
+            <v-row>
+                <v-col>
+                    <tags-component :tags="quote.tags_translated"> </tags-component>
+                    <social-component :id="quote.id"> </social-component>
+                </v-col>
+            </v-row>
+            
         </v-card-actions>
     </v-card>
 </template>

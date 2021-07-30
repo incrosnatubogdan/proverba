@@ -1949,6 +1949,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2031,8 +2036,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -2042,14 +2045,28 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      liked: null
+      liked: null,
+      activeLike: false,
+      activeDislike: false
     };
   },
   methods: {
+    returnColor: function returnColor(value) {
+      if (value) {
+        return this.activeLike ? "blue lighten-2" : "green lighten-2";
+      } else {
+        return this.activeDislike ? "red lighten-2" : "lighten-2";
+      }
+    },
     toggleLike: function toggleLike(value) {
       var _this = this;
 
-      // this.liked = value;
+      if (value) {
+        this.activeLike = !this.activeLike;
+      } else {
+        this.activeDislike = !this.activeDislike;
+      }
+
       _store_index__WEBPACK_IMPORTED_MODULE_1__.default.dispatch(_store_types_actions__WEBPACK_IMPORTED_MODULE_0__.TOGGLE_LIKE, {
         liked: value,
         id: this.id
@@ -2081,6 +2098,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _store_types_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/types/actions */ "./resources/js/store/types/actions.js");
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store/index */ "./resources/js/store/index.js");
+//
 //
 //
 //
@@ -2439,11 +2457,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }
 
   localStorage.setItem('last_id', data[0].id);
-}), _defineProperty(_types$GET_QUOTES$typ, _types_mutations__WEBPACK_IMPORTED_MODULE_0__.TOGGLE_LIKE, function (state) {
-  state.quotes.splice(0, 1);
-  localStorage.setItem('last_id', state.quotes[0].id);
+}), _defineProperty(_types$GET_QUOTES$typ, _types_mutations__WEBPACK_IMPORTED_MODULE_0__.TOGGLE_LIKE, function (state) {// state.quotes.splice(0, 1);
 }), _defineProperty(_types$GET_QUOTES$typ, _types_mutations__WEBPACK_IMPORTED_MODULE_0__.NEXT_QUOTE, function (state) {
   state.quotes.splice(0, 1);
+  localStorage.setItem('last_id', state.quotes[0].id);
 }), _types$GET_QUOTES$typ);
 
 /***/ }),
@@ -39187,9 +39204,23 @@ var render = function() {
       _c(
         "v-card-actions",
         [
-          _c("tags-component", { attrs: { tags: _vm.quote.tags_translated } }),
-          _vm._v(" "),
-          _c("social-component", { attrs: { id: _vm.quote.id } })
+          _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                [
+                  _c("tags-component", {
+                    attrs: { tags: _vm.quote.tags_translated }
+                  }),
+                  _vm._v(" "),
+                  _c("social-component", { attrs: { id: _vm.quote.id } })
+                ],
+                1
+              )
+            ],
+            1
+          )
         ],
         1
       )
@@ -39225,17 +39256,12 @@ var render = function() {
     [
       _c(
         "v-col",
-        { attrs: { cols: "6", sm: "3" } },
+        { attrs: { cols: "4", sm: "3" } },
         [
           _c(
             "v-btn",
             {
-              class: { "swirl-out-bl-bck": _vm.liked },
-              attrs: {
-                disabled: _vm.liked !== null,
-                icon: "",
-                color: "indigo"
-              },
+              attrs: { icon: "", color: _vm.returnColor(true) },
               on: {
                 click: function($event) {
                   return _vm.toggleLike(true)
@@ -39251,44 +39277,41 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-col",
-        { attrs: { cols: "6", sm: "3" } },
+        { attrs: { cols: "4", sm: "3" } },
         [
-          !_vm.liked
-            ? _c(
-                "v-btn",
-                {
-                  class: { "swirl-out-bl-bck": _vm.liked == false },
-                  attrs: {
-                    icon: "",
-                    disabled: _vm.liked !== null,
-                    color: "indigo"
-                  },
-                  on: {
-                    click: function($event) {
-                      return _vm.toggleLike(false)
-                    }
-                  }
-                },
-                [_c("v-icon", [_vm._v("mdi-thumb-down")])],
-                1
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          !_vm.liked
-            ? _c(
-                "v-btn",
-                {
-                  class: { "swirl-out-bl-bck": _vm.liked == false },
-                  attrs: { icon: "", color: "indigo" },
-                  on: {
-                    click: function($event) {
-                      return _vm.next()
-                    }
-                  }
-                },
-                [_vm._v("   Next\n        ")]
-              )
-            : _vm._e()
+          _c(
+            "v-btn",
+            {
+              attrs: { icon: "", color: _vm.returnColor(false) },
+              on: {
+                click: function($event) {
+                  return _vm.toggleLike(false)
+                }
+              }
+            },
+            [_c("v-icon", [_vm._v("mdi-thumb-down")])],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-col",
+        { attrs: { cols: "4", sm: "3" } },
+        [
+          _c(
+            "v-btn",
+            {
+              attrs: { icon: "", color: "indigo" },
+              on: {
+                click: function($event) {
+                  return _vm.next()
+                }
+              }
+            },
+            [_vm._v("   Next\n        ")]
+          )
         ],
         1
       )
@@ -39325,11 +39348,12 @@ var render = function() {
       _c(
         "v-col",
         { attrs: { cols: "12", sm: "12" } },
-        _vm._l(_vm.tags, function(tag) {
+        _vm._l(_vm.tags, function(tag, index) {
           return _c(
             "v-chip",
             {
               key: tag.name_translated,
+              class: { "ml-2": index > 0 },
               attrs: { color: "green", outlined: "", pill: "" }
             },
             [_vm._v("\n        " + _vm._s(tag.name_translated) + "\n        ")]

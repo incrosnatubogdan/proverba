@@ -1,40 +1,38 @@
 <template>
     <v-row>
         <v-col
-            cols="6"
+            cols="4"
             sm="3"
           >
             <v-btn
             @click="toggleLike(true)"
-            :disabled="liked !== null"
               icon
-              v-bind:class="{ 'swirl-out-bl-bck': liked }"
-              color="indigo"
+              :color="returnColor(true)"
             >
               <v-icon>mdi-thumb-up</v-icon>
             </v-btn>
         </v-col>
         <v-col
-            cols="6"
+            cols="4"
             sm="3"
              
           >
             <v-btn
-                v-bind:class="{ 'swirl-out-bl-bck': liked == false }"
                 @click="toggleLike(false)"
                 icon
-                :disabled="liked !== null"
-                v-if="!liked"
-                color="indigo"
+                :color="returnColor(false)"
             >
               <v-icon>mdi-thumb-down</v-icon>
             </v-btn>
-
+        </v-col>
+        <v-col
+            cols="4"
+            sm="3"
+             
+          >
             <v-btn
-                v-bind:class="{ 'swirl-out-bl-bck': liked == false }"
                 @click="next()"
                 icon
-                v-if="!liked"
                 color="indigo"
             >   Next
             </v-btn>
@@ -56,12 +54,27 @@
         },
         data() {
             return {
-                liked: null
+                liked: null,
+                activeLike: false,
+                activeDislike: false
             }
         },
         methods: {
+            returnColor(value) {
+                if(value) {
+                    return this.activeLike ? "blue lighten-2" : "green lighten-2"
+                } else {
+                    return this.activeDislike ? "red lighten-2" : "lighten-2"
+                }
+            },
+            
             toggleLike(value) {
-                // this.liked = value;
+                if(value) {
+                    this.activeLike = !this.activeLike
+                } else {
+                    this.activeDislike = !this.activeDislike
+                }
+
                 store.dispatch(actions.TOGGLE_LIKE, {
                     liked: value,
                     id: this.id

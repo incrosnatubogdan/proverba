@@ -15,12 +15,13 @@ export default {
     },
 
     [types.TOGGLE_LIKE](state) {
-        state.quotes.splice(0, 1);
-        localStorage.setItem('last_id', state.quotes[0].id)
+        // state.quotes.splice(0, 1);
+        
     },
 
     [types.NEXT_QUOTE](state) {
         state.quotes.splice(0, 1);
+        localStorage.setItem('last_id', state.quotes[0].id)
     },
 
     
