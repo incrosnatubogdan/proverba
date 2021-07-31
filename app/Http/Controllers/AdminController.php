@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateQuoteRequest;
+use App\Http\Requests\BulkCreateQuoteRequest;
+
 
 
 use Illuminate\Http\Request;
@@ -58,6 +60,19 @@ class AdminController extends Controller
         $quote = Quote::updateOrCreate(['id' => $request->id], $request->toArray());
         $quote->syncTags($request->tags);
         return $quote;
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function spreadsheet(BulkCreateQuoteRequest $request, Quote $quote)
+    {
+        foreach ($request as $key => $csvRow) {
+            $quote = Quote::updateOrCreate(['post_title' => $csvRow->post_title], $csvRow->toArray());
+            $quote->syncTags($csvRow->tags);
+        }
     }
 
 

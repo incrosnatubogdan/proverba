@@ -130,52 +130,47 @@
                 })
             },
 
-            onChange(e) {
-                var files = e.target.files,
-                    f = files[0];
-                var reader = new FileReader();
-                let readData;
-                reader.onload = function (e) {
-                    var data = new Uint8Array(e.target.result);
-                    var workbook = XLSX.read(data, {
-                        type: 'array'
-                    });
-                    let sheetName = workbook.SheetNames[0]
-                    /* DO SOMETHING WITH workbook HERE */
-                    let worksheet = workbook.Sheets[sheetName];
+            // onChange(e) {
+            //     var files = e.target.files,
+            //         f = files[0];
+            //     var reader = new FileReader();
+            //     let readData;
+            //     reader.onload = function (e) {
+            //         var data = new Uint8Array(e.target.result);
+            //         var workbook = XLSX.read(data, {
+            //             type: 'array'
+            //         });
+            //         let sheetName = workbook.SheetNames[0]
+            //         /* DO SOMETHING WITH workbook HERE */
+            //         let worksheet = workbook.Sheets[sheetName];
 
-                    readData = XLSX.utils.sheet_to_json(worksheet)
-                    let userNamesTocheck = [];
-                    if (readData.length > 0) {
-                        try {
-                            readData = readData.map((item, index) => {
-                                const username = item['First Name'].toLowerCase() + '.' + item['Last Name']
-                                    .toLowerCase();
-                                userNamesTocheck.push(username)
-                                return {
-                                    lname: item['Last Name'],
-                                    fname: item['First Name'],
-                                    username: username,
-                                    email: item['E-mail'],
-                                    location: item['Location'],
-                                    index: index
-                                };
-                            });
+            //         readData = XLSX.utils.sheet_to_json(worksheet)
+            //         if (readData.length > 0) {
+            //             try {
+            //                 readData = readData.map((item, index) => {
+                                
+            //                     return {
+            //                         lname: item['Title'],
+            //                         fname: item['Description'],
+            //                         location: item['Tags'],
+            //                         index: index
+            //                     };
+            //                 });
 
-                            store.dispatch(actions.SET_CSV_DATA, readData)
-                        } catch (e) {
-                            store.dispatch(actions.PUSH_NOTIFICATION, {
-                                type: 'warning',
-                                message: 'An error has occured while adding the excel data, please make sure that the data is valid.'
-                            }, {
-                                root: true
-                            });
-                            store.dispatch(actions.SET_CSV_DATA, [])
-                        }
-                    }
-                };
-                reader.readAsArrayBuffer(f);
-            },
+            //                 store.dispatch(actions.SET_CSV_DATA, readData)
+            //             } catch (e) {
+            //                 store.dispatch(actions.PUSH_NOTIFICATION, {
+            //                     type: 'warning',
+            //                     message: 'An error has occured while adding the excel data, please make sure that the data is valid.'
+            //                 }, {
+            //                     root: true
+            //                 });
+            //                 store.dispatch(actions.SET_CSV_DATA, [])
+            //             }
+            //         }
+            //     };
+            //     reader.readAsArrayBuffer(f);
+            // },
 
             editQuote(quote) {
                 store.dispatch(actions.EDIT_ADMIN_QUOTES, quote)

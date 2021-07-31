@@ -5,98 +5,28 @@
         </v-card-title>
         <v-card-text>
             <input ref="excelUpload" type="file" @change="onChange">
+            <v-btn
+                class="ma-2"
+                color="secondary"
+                href="/spreadsheet/empty"
+                target="_blank"
+                >
+                Download Excel template
+                </v-btn>
             <v-data-table :headers="headers" :items="getCSVData">
                 <template #item.index="props">
                     {{ props.item.index + 1 }}
                 </template>
 
-                <template #item.fname="props">
-                    <v-edit-dialog :return-value.sync="props.item.fname">
-                        {{ props.item.fname }}
-                        <template #input>
-                            <v-text-field v-model="props.item.fname" label="Edit" single-line />
-                        </template>
-                    </v-edit-dialog>
-                </template>
-
-                <template #item.lname="props">
-                    <v-edit-dialog :return-value.sync="props.item.lname">
-                        {{ props.item.lname }}
-                        <template #input>
-                            <v-text-field v-model="props.item.lname" label="Edit" single-line />
-                        </template>
-                    </v-edit-dialog>
-                </template>
-
-                <template #item.username="props">
-                    <v-tooltip v-if="getOnlyCheckedUsernames.includes(props.item.username)" bottom>
-                        <template #activator="{ on, attrs }">
-                            <v-edit-dialog :return-value="props.item.username">
-                                <v-btn :class="checkIfErrored('username', props.item.index) ? 'red--text' : '' "
-                                    class="ma-2 text__button" depressed outlined v-bind="attrs" v-on="on">
-                                    {{ props.item.username }}
-                                    <v-icon dark right color="red">
-                                        mdi-pencil
-                                    </v-icon>
-                                </v-btn>
-                                <template #input>
-                                    <v-text-field :value="props.item.username" label="Edit" single-line
-                                        @change="updateUsername($event, props.item)" />
-                                </template>
-                            </v-edit-dialog>
-                        </template>
-                        <span
-                            v-if="checkIfErrored('username', props.item.index)">{{ getBulkErrors.username[props.item.index].join(', ') }}</span>
-                    </v-tooltip>
-
-                    <v-btn v-else class="ma-2 text__button new" depressed>
-                        {{ props.item.username }}
-                        <v-icon dark right color="success">
-                            mdi-checkbox-marked-circle
-                        </v-icon>
-                    </v-btn>
-
-                    <v-icon v-if="getOnlyCheckedUsernames.includes(props.item.username)" dark right color="success"
-                        class="custom-icon__see_user" @click="userByUsername(props.item.username)">
-                        mdi-eye
-                    </v-icon>
-                </template>
-
-                <template #item.email="props">
-                    <v-tooltip v-if="checkIfErrored('email', props.item.index)" bottom>
-                        <template #activator="{ on, attrs }">
-                            <v-edit-dialog :return-value="props.item.email">
-                                <v-btn class="ma-2 text__button red--text" depressed outlined v-bind="attrs" v-on="on">
-                                    {{ props.item.email }}
-                                    <v-icon dark right color="red">
-                                        mdi-pencil
-                                    </v-icon>
-                                </v-btn>
-                                <template #input>
-                                    <v-text-field v-model="props.item.email" label="Edit" single-line />
-                                </template>
-                            </v-edit-dialog>
-                        </template>
-                        <span
-                            v-if="checkIfErrored('email', props.item.index)">{{ getBulkErrors.email[props.item.index].join(', ') }}</span>
-                    </v-tooltip>
-
-                    <v-edit-dialog v-else :return-value.sync="props.item.email">
-                        {{ props.item.email }}
-                        <template #input>
-                            <v-text-field v-model="props.item.email" label="Edit" single-line />
-                        </template>
-                    </v-edit-dialog>
-                </template>
-
-                <template #item.location="props">
-                    <v-edit-dialog :return-value.sync="props.item.location" large persistent>
-                        <div>{{ props.item.location }}</div>
-                        <template #input>
-                            <v-autocomplete v-model="props.item.location" label="Location" clearable
-                                :items="availableLocation" />
-                        </template>
-                    </v-edit-dialog>
+                <template #item.tags="{ item }">
+                    <v-chip
+                    v-for="(tag, tagIndex) in item.tags"
+                    :key="tagIndex"
+                    dark
+                    x-small
+                    >
+                    {{ tag }}
+                    </v-chip>
                 </template>
 
                 <template #item.actions="{ item }">
@@ -133,6 +63,7 @@
         data() {
             return {
                 localCopy: [],
+                loadingCSV: false,
                 headers: [{
                         text: 'Index',
                         align: 'start',
@@ -141,7 +72,7 @@
                     }, {
                         text: 'Title',
                         sortable: false,
-                        value: 'title',
+                        value: 'post_title',
                     },
                     {
                         text: 'Description',
@@ -164,6 +95,10 @@
                 'isLoggedIn',
                 'getCSVData'
             ]),
+
+            localCopy() {
+                return this.getCSVData.map(x => Object.assign({}, x));
+            },
         },
         mounted() {},
         methods: {
@@ -190,9 +125,11 @@
                         try {
                             readData = readData.map((item, index) => {
                                 return {
-                                    title: item['Title'],
+                                    post_title: item['Title'],
                                     description: item['Description'],
-                                    tags: item['Tags'].split(","),
+                                    tags: Object.values(_.pickBy(item, (value, key) =>
+                                        _.some(['Tags'], str => _.includes(key, str))
+                                     )),
                                     index: index
                                 };
                             });
@@ -213,7 +150,11 @@
             },
 
             saveQuotes() {
-
+                this.loadingCSV = true;
+                store.dispatch(actions.QUOTES_BULK_UPDATE, this.localCopy).then(() => {
+                    store.dispatch(actions.SET_CSV_DATA, []);
+                    this.loadingCSV = false;
+                });
             },
 
         },

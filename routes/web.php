@@ -6,11 +6,7 @@ use App\Http\Controllers\QuoteLikesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\AdminController;
-
-
-
-
-
+use App\Http\Controllers\SpreadSheetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +14,8 @@ use App\Http\Controllers\AdminController;
 |--------------------------------------------------------------------------
 |
 */
+
+Route::get('/spreadsheet/empty', [SpreadSheetController::class, 'getEmptySpreadSheet']);
  
 Route::get('/', [QuoteController::class, 'index']);
 
@@ -38,10 +36,13 @@ Route::get('/user', [UserController::class, 'get']);
 Route::get('/admin', [AdminController::class, 'index']);
 Route::post('/admin/quotes', [AdminController::class, 'get']);
 Route::put('/admin/update', [AdminController::class, 'update']);
-
+Route::put('/admin/spreadsheet', [AdminController::class, 'update']);
 
 Route::get('/login/{provider}', [SocialController::class, 'redirect']);
 Route::get('/login/{provider}/callback', [SocialController::class, 'Callback']);
+
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

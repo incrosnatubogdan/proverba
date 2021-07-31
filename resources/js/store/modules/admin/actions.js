@@ -33,6 +33,19 @@ export default {
         })
     },
 
+    [actions.QUOTES_BULK_UPDATE](context, data) {
+        return new Promise((resolve, reject) => {
+            axios.put(`/admin/spreadsheet`, data).then((response) => {
+                
+                resolve(response)
+            }).catch((error) => {
+                reject(error)
+            });
+        })
+    },
+
+    
+
     [actions.SET_ADMIN_QUOTES](context, data) {
         return new Promise((resolve) => {
             context.commit(mutations.SET_ADMIN_QUOTES, data)
