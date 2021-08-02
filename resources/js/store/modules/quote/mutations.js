@@ -1,7 +1,11 @@
 import * as types from '../../types/mutations'
 
+
+import QuotesSync from "../../../database/Sync/QuotesSync";
+
+
 export default {
-    [types.GET_QUOTES](state, data) {
+    async [types.GET_QUOTES](state, data) {
         // if(state.quotes.length > 0) {
         //     const newData = Object.assign(state.quotes, data);
         //     state.quotes = newData;
@@ -10,7 +14,13 @@ export default {
         // }
 
         state.quotes = data;
-        localStorage.setItem('last_id', data[0].id)
+        localStorage.setItem('last_id', data[0].id);
+
+        await new QuotesSync().execute().then();
+
+        
+
+        
     },
 
     [types.TOGGLE_LIKE](state) {

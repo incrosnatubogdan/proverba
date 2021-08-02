@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import store from './store/index';
 import vuetify from './vuetify';
+import CreateDatabase from "./database/CreateDatabase";
 
 require('./bootstrap');
 
@@ -13,7 +14,7 @@ Vue.component('boot', require('./components/Boot.vue').default);
 Vue.component('admin', require('./components/Admin.vue').default);
 Vue.component('csv-card', require('./components/pages/CSVCard.vue').default);
 
-
+(new CreateDatabase()).boot();
 // Vue.component('auth', require('./components/AuthComponent.vue').default);
 
 

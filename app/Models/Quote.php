@@ -17,6 +17,18 @@ class Quote extends Model
         'post_title',
         'description'
     ];
+
+    protected $appends = ['emphasys_description'];
+
+    public function getEmphasysDescriptionAttribute()
+    {
+        $textArr = explode(" ", $this->description);
+
+        // sets an emphasys on the last word in the description
+        $textArr[count($textArr) - 1] = "<p class='emphasys'>". array_pop($textArr) ."</>";
+
+        return implode(" ", $textArr);
+    }
  
     public function getRouteKeyName()
     {

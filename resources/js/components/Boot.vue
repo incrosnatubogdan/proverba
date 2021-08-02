@@ -23,6 +23,7 @@
     } from 'vuex'
     import Snackbar from './pages/Snackbar';
 
+
     export default {
         components: { Quote, Snackbar, Social },
         props: {
@@ -66,6 +67,7 @@
             if (!this.initialized) {
                 store.dispatch(actions.INITIALIZE).then( () => {
                     store.dispatch(actions.GET_QUOTES)
+                    
                 })
                 
             }

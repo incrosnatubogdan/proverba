@@ -14,4 +14,21 @@ class UserController extends Controller
 
         return response()->json(auth()->user());
     }
+
+    // Feeds are only generated for logged users
+    // Non logged users receive only 50 quotes from their categories
+
+    public function generateFeed(User $user)
+    {
+        if(auth()->user()) {
+
+        }
+    }
+
+    // public function generateFeed(User $user)
+    // {
+    //     if(auth()->user()) {
+
+    //     }
+    // }
 }

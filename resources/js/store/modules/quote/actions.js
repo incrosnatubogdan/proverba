@@ -16,6 +16,20 @@ export default {
                 reject(error)
             });
         })
+
+        // return new Promise((resolve, reject) => {
+        //     axios({
+        //         method: 'get',
+        //         url: '/server-timestamp',
+        //     }).then((response) => {
+        //         context.commit(mutations.GET_QUOTES, response.data)
+        //         // this.quotes = response.data.data;
+        //         resolve(response)
+        //     }).catch((error) => {
+        //         reject(error)
+        //     });
+        // })
+        
     },
 
     [actions.GET_TAG](context, category) {

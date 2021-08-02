@@ -29,6 +29,7 @@
         "xlsx": "^0.16.9"
     },
     "dependencies": {
+        "lovefield": "^2.1.12",
         "vuetify": "^2.4.9",
         "vuex": "^3.6.2"
     }
