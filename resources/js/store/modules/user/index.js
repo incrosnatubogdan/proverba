@@ -4,6 +4,7 @@ import mutations from './mutations'
 
 const state = {
     loggedUser: {},
+    tutorialCompleted: localStorage.getItem('tutorialCompleted') ? localStorage.getItem('tutorialCompleted') : false,
     isLoggedIn: false
 }
 

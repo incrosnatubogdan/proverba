@@ -1,5 +1,8 @@
-.register {
+.text-center {
+    text-align: center !important;
+}
 
+.register {
     &__user {
         position: absolute;
         width: calc(140% - 40px);
