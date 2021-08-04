@@ -94,6 +94,7 @@ class QuoteController extends Controller
 
                     if(count($retrievedData)) {
                         foreach ($retrievedData as $record) {
+                            $record['rating'] = count($comb);
                             array_push($data, $record);
                         }
                     }
