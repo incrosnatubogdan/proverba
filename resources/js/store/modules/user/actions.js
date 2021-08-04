@@ -20,4 +20,18 @@ export default {
         })
     },
 
+    [actions.PASSED_LOGIN](context, data) {
+        return new Promise((resolve) => {
+            context.commit(mutations.PASSED_LOGIN, data)
+            resolve()
+        })
+    },
+
+    [actions.SET_TUTORIAL](context, data) {
+        return new Promise((resolve) => {
+            context.commit(mutations.SET_TUTORIAL, data)
+            resolve()
+        })
+    },
+
 }

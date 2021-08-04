@@ -22,7 +22,10 @@ Route::get('/', [QuoteController::class, 'index']);
 Route::get('/quotes/{id}', [QuoteController::class, 'get']);
 
 Route::get('/quotes/tag/{category}/{id}', [QuoteController::class, 'category']);
- 
+
+Route::get('/tags/all', [QuoteController::class, 'allTags']);
+Route::post('/tags/generate ', [QuoteController::class, 'generate']);
+
 Route::post('/like', [QuoteController::class, 'fetchLike']);
 
 Route::post('/quotes/{quote}/like', [QuoteLikesController::class, 'store']);

@@ -1,12 +1,11 @@
 <template>
     <v-app>
-        <div v-if=" numberOfQuotes > 0 && tutorialCompleted">
+        <div v-if=" numberOfQuotes > 0 && tutorialCompleted && !loadingQuotes">
             <quote :quote="currentQuote" />
             <Snackbar />
         </div>
-        <div v-else-if="!tutorialCompleted">
-            <tutorial />
-        </div>
+        <tutorial v-else-if="!tutorialCompleted" />
+        <loader v-else-if="loadingQuotes" />
         <!-- <auth /> -->
     </v-app>
 </template>
@@ -16,6 +15,8 @@
     import Social from './SocialComponent';
     // import Auth from './AuthComponent';
     import Tutorial from './pages/Tutorial.vue'
+    import Loader from './img/Loader.vue';
+
     import * as actions from '../store/types/actions'
     import store from '../store/index'
     import {
@@ -26,7 +27,7 @@
 
 
     export default {
-        components: { Quote, Snackbar, Social, Tutorial },
+        components: { Quote, Snackbar, Social, Tutorial, Loader },
         props: {
             is_auth: Boolean,
         },
@@ -37,7 +38,8 @@
             ...mapGetters([
                 'getQuotes',
                 'getAuthPopup',
-                'tutorialCompleted'
+                'tutorialCompleted',
+                'loadingQuotes'
             ]),
             numberOfQuotes() {
                 return this.getQuotes.length

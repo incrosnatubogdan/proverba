@@ -1,5 +1,6 @@
 export default {
     isLoggedIn: state => state.isLoggedIn,
     loggedUser: state => state.loggedUser,
-    tutorialCompleted: state => state.tutorialCompleted
+    tutorialCompleted: state => state.tutorialCompleted,
+    passedLogin: state => state.passedLogin,
 }

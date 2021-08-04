@@ -3,7 +3,7 @@
         <v-row 
         align="center"
         justify="center"
-        v-if="!skipLogin"
+        v-if="!passedLogin"
         >
             <v-col class="text-center" cols="12">
                 <logo-svg />
@@ -29,9 +29,10 @@
             </v-col>
         </v-row>
         <v-row v-else>
-            <all-tags />
+            <v-col class="text-center" cols="12">
+                <all-tags />
+            </v-col>
         </v-row>
-        
     </div>
 </template>
 
@@ -57,14 +58,15 @@
         },
         computed: {
             ...mapGetters([
-                'tutorialCompleted'
+                'tutorialCompleted',
+                'passedLogin'
             ]),
         },
         props: {
         },
         data() {
             return {
-                skipLogin: false
+                // skipLogin: true
             }
         },
         watch: {
@@ -79,7 +81,9 @@
         },
         methods: {
             showSetTags() {
-                this.skipLogin = true
+                store.dispatch(actions.PASSED_LOGIN, true)
+                
+                // this.skipLogin = true
             }
         },
     }

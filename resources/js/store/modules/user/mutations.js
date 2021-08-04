@@ -12,4 +12,15 @@ export default {
         state.isLoggedIn = false
         state.loggedUser = {}
     },
+
+    [types.PASSED_LOGIN](state, data) {
+        state.passedLogin = data
+    },
+
+    [types.SET_TUTORIAL](state, data) {
+        state.tutorialCompleted = data
+        localStorage.setItem('tutorialCompleted', data)
+    },
+
+    
 }

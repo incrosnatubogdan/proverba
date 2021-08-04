@@ -3,6 +3,8 @@ import * as actions from '../../types/actions'
 
 export default {
 
+    
+
     [actions.GET_QUOTES](context) {
         return new Promise((resolve, reject) => {
             axios({
@@ -16,6 +18,8 @@ export default {
                 reject(error)
             });
         })
+
+        
 
         // return new Promise((resolve, reject) => {
         //     axios({
@@ -44,6 +48,51 @@ export default {
             }).catch((error) => {
                 reject(error)
             });
+        })
+    },
+
+    [actions.GET_ALL_TAGS](context, category) {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'get',
+                url: '/tags/all',
+            }).then((response) => {
+                context.commit(mutations.GET_ALL_TAGS, response.data)
+                resolve(response)
+            }).catch((error) => {
+                reject(error)
+            });
+        })
+    },
+    [actions.SEARCH_WITH_TAGS](context, data) {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'post',
+                url: '/tags/generate',
+                params: {
+                    tags: data,
+                    ids: context.state.ids
+                }
+            }).then((response) => {
+                context.commit(mutations.SEARCH_WITH_TAGS, response.data)
+                resolve(response)
+            }).catch((error) => {
+                reject(error)
+            });
+        })
+    },
+
+    [actions.SET_LOCAL_TAGS](context, data) {
+        return new Promise((resolve) => {
+            context.commit(mutations.SET_LOCAL_TAGS, data)
+            resolve()
+        })
+    },
+
+    [actions.SET_LOADER](context, data) {
+        return new Promise((resolve) => {
+            context.commit(mutations.SET_LOADER, data)
+            resolve()
         })
     },
 

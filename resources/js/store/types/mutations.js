@@ -6,6 +6,7 @@ export const TOGGLE_AUTH_POPUP = 'TOGGLE_AUTH_POPUP'
 
 export const LOGGED_USER = 'LOGGED_USER'
 export const LOG_OUT_USER = 'LOG_OUT_USER'
+export const PASSED_LOGIN = 'PASSED_LOGIN'
 
 export const GET_TAG = 'GET_TAG'
 export const GET_QUOTES = 'GET_QUOTES'
@@ -23,3 +24,9 @@ export const DELETE_QUOTE = 'DELETE_QUOTE'
 export const SET_ADMIN_FILTERS = "SET_ADMIN_FILTERS"
 export const SET_CSV_DATA = "SET_CSV_DATA"
 export const QUOTES_BULK_UPDATE = "QUOTES_BULK_UPDATE"
+
+export const GET_ALL_TAGS = "GET_ALL_TAGS"
+export const SET_LOCAL_TAGS = "SET_LOCAL_TAGS"
+export const SEARCH_WITH_TAGS = "SEARCH_WITH_TAGS"
+export const SET_TUTORIAL = "SET_TUTORIAL"
+export const SET_LOADER = "SET_LOADER"

@@ -4,6 +4,11 @@ import mutations from './mutations'
 
 const state = {
     quotes: {},
+    allTags: [],
+    tags: localStorage.getItem('tags') ? JSON.parse(localStorage.getItem('tags')) : [],
+    ids: localStorage.getItem('ids') ? JSON.parse(localStorage.getItem('ids')) : [],
+    loadingQuotes: false,
+    
 }
 
 export default {
