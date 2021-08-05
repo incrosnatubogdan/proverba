@@ -3,7 +3,7 @@ import * as actions from '../../types/actions'
 
 export default {
 
-    
+
 
     [actions.GET_QUOTES](context) {
         return new Promise((resolve, reject) => {
@@ -19,7 +19,7 @@ export default {
             });
         })
 
-        
+
 
         // return new Promise((resolve, reject) => {
         //     axios({
@@ -33,7 +33,7 @@ export default {
         //         reject(error)
         //     });
         // })
-        
+
     },
 
     [actions.GET_TAG](context, category) {
@@ -64,15 +64,12 @@ export default {
             });
         })
     },
+    
     [actions.SEARCH_WITH_TAGS](context, data) {
         return new Promise((resolve, reject) => {
-            axios({
-                method: 'post',
-                url: '/tags/generate',
-                params: {
-                    tags: data,
-                    ids: context.state.ids
-                }
+            axios.post('/tags/generate', {
+                tags: data,
+                ids: context.state.ids
             }).then((response) => {
                 context.commit(mutations.SEARCH_WITH_TAGS, response.data)
                 resolve(response)

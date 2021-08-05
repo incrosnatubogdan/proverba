@@ -9,6 +9,7 @@
             :key="tag.name_translated"
             color="green"
             outlined
+            disabled
             :class="{ 'ml-2' : index > 0 }"
             pill
             >

@@ -32,17 +32,15 @@ export default {
     },
 
     [types.SEARCH_WITH_TAGS](state, data) {
-        // state.quotes.splice(0, 1);
-        localStorage.setItem('ids', JSON.stringify([]))
+        // NEEDS TO BE REPLACE WITH CLEAR_IDS
+        // localStorage.setItem('ids', JSON.stringify([]))
+
+
         localStorage.setItem('tags', JSON.stringify(state.tags))
         state.quotes = data;
         setTimeout(() => {
             state.loadingQuotes = false
         }, 2000)
-        // setTimeout(
-        //     function() {
-        //         state.loadingQuotes = false
-        // }, 2000);
     },
 
     [types.SET_LOCAL_TAGS](state, tag) {
@@ -57,7 +55,9 @@ export default {
     },
 
     [types.NEXT_QUOTE](state) {
+        state.ids.push(state.quotes[0].id);
+        localStorage.setItem('ids', JSON.stringify(state.ids));
         state.quotes.splice(0, 1);
-        localStorage.setItem('last_id', state.quotes[0].id)
+        
     },
 }

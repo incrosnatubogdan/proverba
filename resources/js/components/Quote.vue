@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title>
-            {{ quote.post_title }}
+            {{ quote.post_title }} -  {{ quote.id }}
         </v-card-title>
         <v-card-subtitle>
             {{ quote.post_slug }}
@@ -14,14 +14,13 @@
             <v-list-item-group color="primary">
                 <v-list-item v-for="(item, i) in quote.tags_translated" :key="i">
                     <v-list-item-content>
-                        <v-list-item-title v-text="item.name.en" @click="getByCategory(item.name.en)">
+                        <v-list-item-title v-text="item.name.en" :class="objectClass(item.name.en)">
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list-item-group>
         </v-list>
 
-        <!-- <v-btn @click="getByCategory('first tag')">Category</v-btn> -->
         <v-card-actions v-if="isLoggedIn">
             <tags-component :tags="quote.tags_translated"> </tags-component>
             <social-component :id="quote.id"> </social-component>
@@ -58,7 +57,10 @@
         computed: {
             ...mapGetters([
                 'isLoggedIn',
+                'getTags',
+                'numberOfQuotes'
             ]),
+            
         },
         props: {
             quote: Object
@@ -68,17 +70,40 @@
                 alllikes: '',
             }
         },
+        watch: {
+            numberOfQuotes(val) {
+                console.log(val, 'numberOfQuotes')
+            }
+        },
         methods: {
             showSocial() {
                 store.dispatch(actions.TOGGLE_AUTH_POPUP, true)
             },
-            getByCategory(category) {
-                store.dispatch(actions.GET_TAG, category).then(() => {
-                    this.selectedItem = null
-                })
+            isSelected(tag) {
+                return this.getTags.includes(tag)
             },
+            objectClass(tag) {
+                return {
+                    "tags__item" : true,
+                    tags__selected: this.isSelected(tag),
+                }
+            }
         },
-        mounted() {}
+        mounted() {
+            
+        }
     }
 
 </script>
+
+<style lang="scss" scoped>
+.tags {
+    &__item{
+        pointer-events:none;
+    }
+
+    &__selected{
+        color: red;
+    }
+}
+</style>

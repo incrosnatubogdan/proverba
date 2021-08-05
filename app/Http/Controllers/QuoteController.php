@@ -74,6 +74,12 @@ class QuoteController extends Controller
     public function generate(Request $request) {
         $data = array();
         $ids = array();
+        if(is_string($request->ids)) {
+            $ids = array_map('intval', explode(',', $request->ids));
+        } else if(is_array($request->ids)) {
+            $ids = $request->ids;
+        }
+
         $tags = $request->tags;
         $allTags = Tag::pluck('name')->toArray();
         

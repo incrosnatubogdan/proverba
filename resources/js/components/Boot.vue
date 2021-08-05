@@ -1,11 +1,11 @@
 <template>
     <v-app>
-        <div v-if=" numberOfQuotes > 0 && tutorialCompleted && !loadingQuotes">
+        <div v-if="numberOfQuotes > 0 && tutorialCompleted && !loadingQuotes">
             <quote :quote="currentQuote" />
             <Snackbar />
         </div>
         <tutorial v-else-if="!tutorialCompleted" />
-        <loader v-else-if="loadingQuotes" />
+        <loader v-else />
         <!-- <auth /> -->
     </v-app>
 </template>
@@ -39,14 +39,14 @@
                 'getQuotes',
                 'getAuthPopup',
                 'tutorialCompleted',
-                'loadingQuotes'
+                'loadingQuotes',
+                'getQuotes',
+                'getTags',
+                'numberOfQuotes'
             ]),
-            numberOfQuotes() {
-                return this.getQuotes.length
-            },
             currentQuote() {
                 return this.getQuotes[0]
-            }
+            },
         },
         props: {
         },
@@ -57,23 +57,15 @@
         methods: {
         },
         watch: {
-            numberOfQuotes: {
-                handler(number) {
-                    if(number < 10) {
-                        store.dispatch(actions.GET_QUOTES)
-                    }
-                    console.log(number)
-                },
-                deep: true
-            },
         },
         mounted() {
             if (!this.initialized) {
                 store.dispatch(actions.INITIALIZE).then( () => {
-                    store.dispatch(actions.GET_QUOTES)
-                    
                 })
-                
+            }
+
+            if(this.tutorialCompleted && this.getTags.length > 0) {
+                store.dispatch(actions.SEARCH_WITH_TAGS, this.getTags)
             }
         }
     }
