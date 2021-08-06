@@ -1,48 +1,35 @@
 <template>
     <v-row class="social">
-        <v-col cols="4" sm="3">
-            <!-- <v-btn class="social__btn" @click="toggleLike(true)" icon>
-                <v-icon>mdi-thumb-up</v-icon>
-                <p>
-                    Bun
-                </p>
-            </v-btn> -->
-            <div class="social__btn" @click="toggleLike(true)">
-                <!-- <v-icon>mdi-star</v-icon> -->
+        <v-col cols="3" sm="3">
+            <div class="social__btn" @click="isLoggedIn ? toggleLike(true) : toggleBubble()">
                 <like-svg />
                 <p> Bun </p>
             </div>
         </v-col>
-        <v-col cols="4" sm="3">
 
-            <div class="social__btn" @click="toggleLike(false)">
-                <!-- <v-icon>mdi-star</v-icon> -->
+        <v-col cols="3" sm="3">
+            <div class="social__btn" @click="isLoggedIn ? toggleLike(false) : toggleBubble()">
                 <dislike-svg />
                 <p> Nu prea </p>
             </div>
         </v-col>
-        <v-col cols="4" sm="3">
-            <!-- <v-btn class="social__btn" @click="addToFavorite()" icon>
-                <v-icon>mdi-star</v-icon>
-                <p> Favorit </p>
-            </v-btn> -->
 
-            <div class="social__btn" @click="addToFavorite()">
-                <!-- <v-icon>mdi-star</v-icon> -->
+        <v-col cols="3" sm="3">
+            <div class="social__btn" @click="isLoggedIn ? addToFavorite() : toggleBubble()">
                 <favorite-svg />
                 <p> Favorit </p>
             </div>
         </v-col>
-        <v-col cols="4" sm="3">
-            <!-- <v-btn class="social__btn" @click="next()" icon>
-                <next-svg />
-                <p> Urmatorul </p>
-            </v-btn> -->
 
+        <v-col cols="3" sm="3">
             <div class="social__btn" @click="next()">
                 <next-svg />
                 <p> Urmatorul </p>
             </div>
+        </v-col>
+
+        <v-col cols="12" v-if="showBubble">
+            <unregistered-component />
         </v-col>
     </v-row>
 </template>
@@ -59,6 +46,7 @@
     import LikeIcon from './img/LikeIcon';
     import DislikeIcon from './img/DislikeIcon';
     import FavoriteIcon from './img/FavoriteIcon'
+    import UnregisteredComponent from './UnregisteredComponent.vue';
 
     export default {
         props: {
@@ -70,19 +58,32 @@
             ]),
         },
         components: {
-            'next-svg' : ArrowIcon,
-            'like-svg' : LikeIcon,
-            'dislike-svg' : DislikeIcon,
-            'favorite-svg' : FavoriteIcon,
+            'next-svg': ArrowIcon,
+            'like-svg': LikeIcon,
+            'dislike-svg': DislikeIcon,
+            'favorite-svg': FavoriteIcon,
+            UnregisteredComponent,
         },
         data() {
             return {
                 liked: null,
                 activeLike: false,
-                activeDislike: false
+                activeDislike: false,
+                showBubble: false,
+                bubbleTimeout: null
             }
         },
         methods: {
+            toggleBubble() {
+                const bubbleBool = this.showBubble
+                this.showBubble = !bubbleBool;
+                clearTimeout(this.bubbleTimeout);
+                if(this.showBubble) {
+                    this.bubbleTimeout = setTimeout(() => {
+                        this.showBubble = false
+                    }, 2000)
+                }
+            },
             // returnColor(value) {
             //     if(value) {
             //         return this.activeLike ? "blue lighten-2" : "green lighten-2"
@@ -110,6 +111,7 @@
                 });
             },
             next() {
+                this.showBubble = false;
                 store.dispatch(actions.NEXT_QUOTE);
             }
         },

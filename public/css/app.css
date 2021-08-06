@@ -38,6 +38,10 @@
   text-align: center !important;
 }
 
+.v-application--wrap {
+  padding: 20px;
+}
+
 .register__user {
   position: absolute;
   width: calc(140% - 40px);
@@ -130,7 +134,8 @@
   cursor: pointer;
 }
 
-.social__btn:hover svg {
+.social__btn:hover svg,
+.social__btn:hover g {
   fill: red;
 }
 
@@ -141,6 +146,21 @@
 .social__btn p {
   margin-top: 10px;
   color: red;
+}
+
+.bubble__tooltip {
+  position: relative;
+  background: transparent;
+}
+
+.bubble__text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding: 0 25px;
+  font-size: 18px;
 }
 
 /*!

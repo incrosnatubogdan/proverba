@@ -2,6 +2,10 @@
     text-align: center !important;
 }
 
+.v-application--wrap {
+    padding: 20px;
+}
+
 .register {
     &__user {
         position: absolute;
@@ -98,7 +102,8 @@
         &:hover {
             cursor: pointer;
 
-            svg {
+            svg,
+            g {
                 fill: red;
             }
         }
@@ -112,4 +117,20 @@
             color: red;
         }
     }
+}
+
+
+.bubble__tooltip {
+    position: relative;
+    background: transparent;
+}
+
+.bubble__text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 0 25px;
+    font-size: 18px;
 }

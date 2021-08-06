@@ -1,39 +1,36 @@
 <template>
-    <v-card class="quote">
-        <v-row>
-            <v-col class="text-center" cols="12">
-                <logo-svg />
-            </v-col>
+    <v-row class="quote">
+        <v-col class="text-center" cols="12">
+            <logo-svg />
+        </v-col>
 
-            <v-col class="text-center" cols="12">
-                <v-card-text v-html="quote.emphasys_description" class="quote__title" />
-            </v-col>
+        <v-col class="text-center" cols="12">
+            <v-card-text v-html="quote.emphasys_description" class="quote__title" />
+        </v-col>
 
-            <v-col class="text-center" cols="12">
-                <p>
-                    <v-icon small> mdi-eye </v-icon>
-                    21.285
-                </p>
-            </v-col>
+        <v-col class="text-center" cols="12">
+            <p>
+                <v-icon small> mdi-eye </v-icon>
+                21.285
+            </p>
+        </v-col>
 
-            <v-col class="text-center" cols="12">
-                <v-card-actions>
-                    <social-component :id="quote.id"> </social-component>
-                </v-card-actions>
-                <!-- <v-card-actions v-else>
+        <v-col class="text-center" cols="12">
+            <v-card-actions>
+                <social-component :id="quote.id"> </social-component>
+            </v-card-actions>
+            <!-- <v-card-actions v-else>
                     <unregistered-component :tags="quote.tags_translated"> </unregistered-component>
                 </v-card-actions> -->
-            </v-col>
+        </v-col>
 
-            <v-col class="text-center tags__grid" cols="12">
-                <p v-for="(tag, i) in quote.tags_translated" :key="i" :class="objectClass(tag.name.en)" disabled>
-                    {{ tag.name.en }}
-                </p>
-            </v-col>
+        <v-col class="text-center tags__grid" cols="12">
+            <p v-for="(tag, i) in quote.tags_translated" :key="i" :class="objectClass(tag.name.en)" disabled>
+                {{ tag.name.en }}
+            </p>
+        </v-col>
 
-        </v-row>
-
-    </v-card>
+    </v-row>
 </template>
 
 <script>
@@ -60,7 +57,7 @@
             SocialComponent,
             TagsComponent,
             UnregisteredComponent,
-            'logo-svg' : LogoSVG
+            'logo-svg': LogoSVG
         },
         computed: {
             ...mapGetters([
