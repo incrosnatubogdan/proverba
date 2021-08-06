@@ -1,33 +1,38 @@
 <template>
-    <v-card>
-        <v-card-title>
-            {{ quote.post_title }} -  {{ quote.id }}
-        </v-card-title>
-        <v-card-subtitle>
-            {{ quote.post_slug }}
-        </v-card-subtitle>
-        <v-card-text>
-            {{ quote.description }}
-        </v-card-text>
+    <v-card class="quote">
+        <v-row>
+            <v-col class="text-center" cols="12">
+                <logo-svg />
+            </v-col>
 
-        <v-list flat>
-            <v-list-item-group color="primary">
-                <v-list-item v-for="(item, i) in quote.tags_translated" :key="i">
-                    <v-list-item-content>
-                        <v-list-item-title v-text="item.name.en" :class="objectClass(item.name.en)">
-                        </v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-list-item-group>
-        </v-list>
+            <v-col class="text-center" cols="12">
+                <v-card-text v-html="quote.emphasys_description" class="quote__title" />
+            </v-col>
 
-        <v-card-actions v-if="isLoggedIn">
-            <tags-component :tags="quote.tags_translated"> </tags-component>
-            <social-component :id="quote.id"> </social-component>
-        </v-card-actions>
-        <v-card-actions v-else>
-            <unregistered-component :tags="quote.tags_translated"> </unregistered-component>
-        </v-card-actions>
+            <v-col class="text-center" cols="12">
+                <p>
+                    <v-icon small> mdi-eye </v-icon>
+                    21.285
+                </p>
+            </v-col>
+
+            <v-col class="text-center" cols="12">
+                <v-card-actions>
+                    <social-component :id="quote.id"> </social-component>
+                </v-card-actions>
+                <!-- <v-card-actions v-else>
+                    <unregistered-component :tags="quote.tags_translated"> </unregistered-component>
+                </v-card-actions> -->
+            </v-col>
+
+            <v-col class="text-center tags__grid" cols="12">
+                <p v-for="(tag, i) in quote.tags_translated" :key="i" :class="objectClass(tag.name.en)" disabled>
+                    {{ tag.name.en }}
+                </p>
+            </v-col>
+
+        </v-row>
+
     </v-card>
 </template>
 
@@ -35,6 +40,8 @@
     import SocialComponent from './SocialComponent';
     import UnregisteredComponent from './UnregisteredComponent';
     import TagsComponent from './TagsComponent';
+    import LogoSVG from './img/LogoSVG.vue';
+
     import store from '../store/index';
     import * as actions from '../store/types/actions';
 
@@ -52,7 +59,8 @@
         components: {
             SocialComponent,
             TagsComponent,
-            UnregisteredComponent
+            UnregisteredComponent,
+            'logo-svg' : LogoSVG
         },
         computed: {
             ...mapGetters([
@@ -60,7 +68,6 @@
                 'getTags',
                 'numberOfQuotes'
             ]),
-            
         },
         props: {
             quote: Object
@@ -84,26 +91,28 @@
             },
             objectClass(tag) {
                 return {
-                    "tags__item" : true,
-                    tags__selected: this.isSelected(tag),
+                    "tags__item": true,
+                    tags__preferred: this.isSelected(tag),
+                    tags__disabled: !this.isSelected(tag),
                 }
             }
         },
         mounted() {
-            
+
         }
     }
 
 </script>
 
 <style lang="scss" scoped>
-.tags {
-    &__item{
-        pointer-events:none;
+    .tags {
+        &__item {
+            pointer-events: none;
+        }
+
+        &__selected {
+            color: red;
+        }
     }
 
-    &__selected{
-        color: red;
-    }
-}
 </style>

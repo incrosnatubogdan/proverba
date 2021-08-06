@@ -18,3 +18,98 @@
         border-radius: 4px;
     }
 }
+
+.quote {
+
+    &__title,
+    .v-card__text.quote__title {
+        font-size: 26px;
+
+        .emphasys {
+            position: relative;
+            display: inline;
+            z-index: 1;
+
+            &::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: -2px;
+                width: 100%;
+                height: 15px;
+                background-color: $orange;
+                z-index: -1;
+            }
+        }
+    }
+}
+
+.tags {
+    &__grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    &__item {
+        border-radius: 25px;
+        border: 1px solid red;
+        margin: 10px 7px;
+        padding: 5px 10px;
+        color: red;
+
+        &:hover {
+            cursor: pointer;
+            background-color: red;
+            color: white;
+        }
+    }
+
+    &__selected {
+        background-color: red;
+        color: white;
+
+        &:hover {
+            cursor: pointer;
+            background-color: white;
+            color: red;
+        }
+    }
+
+    &__preferred {
+        background-color: transparent;
+        color: blue;
+    }
+
+    &__disabled {
+        pointer-events: none;
+        border: 1px solid gray;
+        color: gray;
+    }
+}
+
+.social {
+    &__btn {
+        display: flex;
+        flex-direction: column;
+        text-transform: none;
+        align-items: center;
+
+        &:hover {
+            cursor: pointer;
+
+            svg {
+                fill: red;
+            }
+        }
+
+        svg {
+            fill: gray;
+        }
+
+        p {
+            margin-top: 10px;
+            color: red;
+        }
+    }
+}

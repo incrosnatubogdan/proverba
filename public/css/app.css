@@ -53,6 +53,96 @@
   border-radius: 4px;
 }
 
+.quote__title,
+.quote .v-card__text.quote__title {
+  font-size: 26px;
+}
+
+.quote__title .emphasys,
+.quote .v-card__text.quote__title .emphasys {
+  position: relative;
+  display: inline;
+  z-index: 1;
+}
+
+.quote__title .emphasys::before,
+.quote .v-card__text.quote__title .emphasys::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 15px;
+  background-color: #EC8E24;
+  z-index: -1;
+}
+
+.tags__grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tags__item {
+  border-radius: 25px;
+  border: 1px solid red;
+  margin: 10px 7px;
+  padding: 5px 10px;
+  color: red;
+}
+
+.tags__item:hover {
+  cursor: pointer;
+  background-color: red;
+  color: white;
+}
+
+.tags__selected {
+  background-color: red;
+  color: white;
+}
+
+.tags__selected:hover {
+  cursor: pointer;
+  background-color: white;
+  color: red;
+}
+
+.tags__preferred {
+  background-color: transparent;
+  color: blue;
+}
+
+.tags__disabled {
+  pointer-events: none;
+  border: 1px solid gray;
+  color: gray;
+}
+
+.social__btn {
+  display: flex;
+  flex-direction: column;
+  text-transform: none;
+  align-items: center;
+}
+
+.social__btn:hover {
+  cursor: pointer;
+}
+
+.social__btn:hover svg {
+  fill: red;
+}
+
+.social__btn svg {
+  fill: gray;
+}
+
+.social__btn p {
+  margin-top: 10px;
+  color: red;
+}
+
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
@@ -66,7 +156,7 @@
   --purple: #9561e2;
   --pink: #f66d9b;
   --red: #e3342f;
-  --orange: #f6993f;
+  --orange: #EC8E24;
   --yellow: #ffed4a;
   --green: #38c172;
   --teal: #4dc0b5;
